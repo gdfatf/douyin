@@ -18,6 +18,14 @@ html{scroll-behavior:smooth;scrollbar-width:none}
 ::-webkit-scrollbar{display:none}
 body{background:var(--bg);color:#e0e0e0;font-family:'Noto Sans SC',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 body.stage-mode{overflow:hidden}
+.rotate-tip{
+  position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;flex-direction:column;
+  background:radial-gradient(circle at 50% 40%,rgba(0,229,255,.1),rgba(2,4,10,.96));
+  color:#dff6ff;text-align:center;padding:2rem
+}
+.rotate-tip .rt-title{font-family:'Outfit',sans-serif;font-size:clamp(1.4rem,5.5vw,2rem);font-weight:800;letter-spacing:.03em;margin-bottom:.6rem}
+.rotate-tip .rt-sub{font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.18em;color:rgba(149,229,255,.78);margin-bottom:.7rem}
+.rotate-tip .rt-body{font-size:1rem;line-height:1.85;color:rgba(226,244,255,.82);max-width:380px}
 
 /* ====== GLOBAL CANVAS OVERLAY ====== */
 #globalCanvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
@@ -227,12 +235,21 @@ body.stage-mode .side-nav{pointer-events:none}
   .score-main .num{font-size:clamp(2.2rem,11vw,3rem)}
   .percentile-copy p{font-size:1rem;line-height:1.8;color:rgba(255,255,255,.86)}
 }
+@media (orientation:portrait){
+  .rotate-tip{display:flex}
+  .hero,.layer,.final,.percentile,#globalCanvas,#techTransition,.side-nav{display:none!important}
+}
 </style>
 </head>
 <body>
 
 <canvas id="globalCanvas"></canvas>
 <div id="techTransition"></div>
+<div class="rotate-tip" id="rotateTip">
+  <p class="rt-sub">LANDSCAPE REQUIRED</p>
+  <p class="rt-title">请横屏观看</p>
+  <p class="rt-body">该演示为横屏录屏优化版本。旋转手机到横屏后，将自动进入完整动态展示。</p>
+</div>
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="heroSection">
