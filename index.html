@@ -157,6 +157,12 @@ body.stage-mode{overflow:hidden}
 .showcase.seq-play .seq-item{animation:seqIn .68s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--sd,0ms)}
 .showcase .viz-item{opacity:0;transform:translateY(26px) scale(.18) scaleX(.55) scaleY(1.35);filter:brightness(1.9) blur(10px)}
 .showcase.seq-play .viz-item{animation:vizBuild 1.12s cubic-bezier(.16,.88,.22,1) forwards;animation-delay:var(--vd,0ms)}
+.showcase .skeleton-item{opacity:0;transform:translateY(14px) scale(.82);filter:brightness(1.7) blur(6px)}
+.showcase.seq-play .skeleton-item{animation:skeletonBuild .95s cubic-bezier(.18,.88,.24,1) forwards;animation-delay:var(--kd,0ms)}
+.showcase .node-item{opacity:0;transform:scale(.3);filter:brightness(1.9) blur(7px)}
+.showcase.seq-play .node-item{animation:nodeIgnite .8s cubic-bezier(.22,.84,.28,1) forwards;animation-delay:var(--nd,180ms)}
+.showcase .text-item{opacity:0;transform:translateY(16px);filter:blur(2px)}
+.showcase.seq-play .text-item{animation:textResolve .7s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--td,420ms)}
 .layer-grid{position:relative;overflow:visible}
 .layer-grid::after{
   content:'';position:absolute;left:8%;right:8%;top:50%;
@@ -216,6 +222,20 @@ body.stage-mode .side-nav{pointer-events:none}
   0%{opacity:0;clip-path:inset(0 100% 0 0);transform:translateY(8px);filter:brightness(1.6)}
   60%{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(0);filter:brightness(1.18)}
   100%{opacity:1;clip-path:inset(0 0 0 0);filter:brightness(1)}
+}
+@keyframes skeletonBuild{
+  0%{opacity:0;transform:translateY(14px) scale(.82);filter:brightness(1.7) blur(6px)}
+  55%{opacity:1;transform:translateY(0) scale(1.03);filter:brightness(1.2) blur(1px)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:brightness(1) blur(0)}
+}
+@keyframes nodeIgnite{
+  0%{opacity:0;transform:scale(.3);filter:brightness(1.9) blur(7px)}
+  40%{opacity:1;transform:scale(1.12);filter:brightness(1.5) blur(1px)}
+  100%{opacity:1;transform:scale(1);filter:brightness(1) blur(0)}
+}
+@keyframes textResolve{
+  0%{opacity:0;transform:translateY(16px);filter:blur(2px)}
+  100%{opacity:1;transform:translateY(0);filter:blur(0)}
 }
 @keyframes techFlash{
   0%{opacity:0}
@@ -686,16 +706,32 @@ function markSequence(section){
   )];
   let maxDelay=0;
   let noteDelay=0;
+  let kIdx=0,nIdx=0,tIdx=0;
   targets.forEach((el,idx)=>{
     const isNote=el.classList.contains('layer-note');
     const isViz=el.matches('#heroViz,.hero-overlay,.layer-canvas-wrap,.layer-formula,#destinyCanvas,.formula-field,.big-formula,.percentile-panel,.score-card');
-    let delay=idx*130;
-    if(isNote)delay=(targets.length+2)*130;
+    const isSkeleton=el.matches('#heroViz,.hero-overlay,.layer-canvas-wrap,#destinyCanvas,.formula-field,.percentile-panel');
+    const isNode=el.matches('.layer-formula,.big-formula,.score-card,.nav-dot');
+    let delay=idx*120;
+    if(isSkeleton)delay=120+kIdx++*130;
+    if(isNode)delay=560+nIdx++*110;
+    if(!isSkeleton&&!isNode)delay=980+tIdx++*120;
+    if(isNote)delay=(targets.length+9)*120;
     el.classList.add('seq-item');
     el.style.setProperty('--sd',`${delay}ms`);
     if(isViz){
       el.classList.add('viz-item');
       el.style.setProperty('--vd',`${Math.max(0,delay-180)}ms`);
+    }
+    if(isSkeleton){
+      el.classList.add('skeleton-item');
+      el.style.setProperty('--kd',`${Math.max(0,delay-120)}ms`);
+    }else if(isNode){
+      el.classList.add('node-item');
+      el.style.setProperty('--nd',`${Math.max(0,delay-80)}ms`);
+    }else{
+      el.classList.add('text-item');
+      el.style.setProperty('--td',`${delay}ms`);
     }
     if(isNote)noteDelay=delay;
     if(delay>maxDelay)maxDelay=delay;
