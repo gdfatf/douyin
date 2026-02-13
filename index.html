@@ -63,13 +63,13 @@ body.stage-mode{overflow:hidden}
 .layer-tag{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.4em;text-transform:uppercase;margin-bottom:1rem;opacity:0;transform:translateX(-20px);transition:all .8s}
 .layer.in-view .layer-tag{opacity:.6;transform:translateX(0)}
 
-.layer-heading{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(2.3rem,4.8vw,4rem);letter-spacing:-.03em;line-height:1.06;margin-bottom:.4rem;opacity:0;transform:translateY(30px);transition:all .8s .1s}
+.layer-heading{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(2.8rem,5.6vw,4.8rem);letter-spacing:-.03em;line-height:1.04;margin-bottom:.48rem;opacity:0;transform:translateY(30px);transition:all .8s .1s}
 .layer.in-view .layer-heading{opacity:1;transform:translateY(0)}
 
-.layer-sub{font-size:clamp(1.02rem,2vw,1.35rem);font-weight:500;margin-bottom:1.5rem;opacity:0;transform:translateY(20px);transition:all .8s .2s}
+.layer-sub{font-size:clamp(1.18rem,2.35vw,1.55rem);font-weight:550;margin-bottom:1.55rem;opacity:0;transform:translateY(20px);transition:all .8s .2s}
 .layer.in-view .layer-sub{opacity:.7;transform:translateY(0)}
 
-.layer-body{font-size:1rem;line-height:1.96;color:rgba(255,255,255,.62);font-weight:350;margin-bottom:1.5rem;opacity:0;transform:translateY(20px);transition:all .8s .3s}
+.layer-body{font-size:1.12rem;line-height:2.02;color:rgba(255,255,255,.72);font-weight:380;margin-bottom:1.55rem;opacity:0;transform:translateY(20px);transition:all .8s .3s}
 .layer.in-view .layer-body{opacity:1;transform:translateY(0)}
 
 .layer-formula{background:rgba(255,255,255,.015);border:1px solid rgba(255,255,255,.04);border-radius:14px;padding:1.2rem 1.6rem;backdrop-filter:blur(12px);opacity:0;transform:translateY(20px);transition:all .8s .4s;position:relative;overflow:hidden}
@@ -110,7 +110,7 @@ body.stage-mode{overflow:hidden}
 .final .big-formula::after{content:'';position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,rgba(0,240,255,.03),rgba(255,64,129,.03));pointer-events:none}
 .final .big-formula .katex{font-size:clamp(.8rem,1.6vw,1.15rem)!important;color:rgba(255,255,255,.7)}
 .final .closing{max-width:650px;font-size:1rem;color:rgba(255,255,255,.3);font-weight:300;line-height:2;font-style:italic}
-.layer-note{min-height:2.8rem;margin:-.1rem 0 1.2rem;padding:.68rem .92rem;border-left:2px solid currentColor;background:rgba(255,255,255,.04);font-size:.93rem;line-height:1.78;color:rgba(255,255,255,.82);opacity:0;transform:translateY(12px);transition:all .6s .42s;position:relative;overflow:hidden}
+.layer-note{min-height:2.9rem;margin:-.1rem 0 1.2rem;padding:.7rem .96rem;border-left:2px solid currentColor;background:rgba(255,255,255,.05);font-size:1.02rem;line-height:1.8;color:rgba(255,255,255,.88);opacity:0;transform:translateY(12px);transition:all .6s .42s;position:relative;overflow:hidden}
 .layer.in-view .layer-note{opacity:1;transform:translateY(0)}
 .layer-note::after{content:'';position:absolute;bottom:0;left:0;height:1px;width:100%;background:linear-gradient(90deg,currentColor,transparent);opacity:.35}
 
@@ -176,6 +176,31 @@ body.stage-mode{overflow:hidden}
   animation:archCanvasBuild 1.1s cubic-bezier(.2,.86,.24,1) forwards;
   animation-delay:var(--vd,180ms);
 }
+.showcase .layer-canvas-wrap{
+  opacity:0;
+  transform:perspective(900px) rotateX(14deg) scale(.34) scaleX(.82);
+  filter:brightness(1.55) blur(6px);
+}
+.showcase.seq-play .layer-canvas-wrap{
+  animation:canvasGenesis 1.9s cubic-bezier(.16,.88,.24,1) forwards;
+  animation-delay:var(--vd,140ms);
+}
+.layer-canvas-wrap::before{
+  content:'';position:absolute;inset:0;border-radius:20px;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,rgba(0,229,255,.16) 0 1px,transparent 1px 22px),
+    repeating-linear-gradient(180deg,rgba(0,229,255,.11) 0 1px,transparent 1px 18px);
+  opacity:0;transform:scaleY(.02);transform-origin:top center;
+}
+.layer-canvas-wrap::after{
+  content:'';position:absolute;inset:0;border-radius:20px;pointer-events:none;
+  background:linear-gradient(180deg,transparent 0%,rgba(0,229,255,.32) 48%,transparent 100%);
+  opacity:0;transform:translateY(-110%);
+}
+.showcase.seq-play .layer-canvas-wrap::before{animation:gridAssemble 1.2s ease forwards;animation-delay:calc(var(--vd,140ms) + 120ms)}
+.showcase.seq-play .layer-canvas-wrap::after{animation:scanSweep 1.3s ease forwards;animation-delay:calc(var(--vd,140ms) + 580ms)}
+.showcase .layer-canvas-wrap canvas{opacity:0;transform:scale(1.08);filter:blur(10px) brightness(1.45) saturate(1.35)}
+.showcase.seq-play .layer-canvas-wrap canvas{animation:canvasResolve 1.45s cubic-bezier(.2,.86,.24,1) forwards;animation-delay:calc(var(--vd,140ms) + 460ms)}
 .showcase.seq-play .layer-formula{
   animation:formulaConstruct 1.05s cubic-bezier(.18,.82,.22,1) forwards;
   animation-delay:calc(var(--vd,0ms) + 90ms);
@@ -223,6 +248,26 @@ body.stage-mode .side-nav{pointer-events:none}
   60%{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(0);filter:brightness(1.18)}
   100%{opacity:1;clip-path:inset(0 0 0 0);filter:brightness(1)}
 }
+@keyframes canvasGenesis{
+  0%{opacity:0;transform:perspective(900px) rotateX(14deg) scale(.34) scaleX(.82);filter:brightness(1.55) blur(6px)}
+  45%{opacity:1;transform:perspective(900px) rotateX(3deg) scale(1.05) scaleX(1.04);filter:brightness(1.22) blur(2px)}
+  100%{opacity:1;transform:perspective(900px) rotateX(0deg) scale(1);filter:brightness(1) blur(0)}
+}
+@keyframes gridAssemble{
+  0%{opacity:0;transform:scaleY(.02)}
+  55%{opacity:.95;transform:scaleY(1)}
+  100%{opacity:.18;transform:scaleY(1)}
+}
+@keyframes scanSweep{
+  0%{opacity:0;transform:translateY(-110%)}
+  30%{opacity:.75}
+  100%{opacity:0;transform:translateY(115%)}
+}
+@keyframes canvasResolve{
+  0%{opacity:0;transform:scale(1.08);filter:blur(10px) brightness(1.45) saturate(1.35)}
+  60%{opacity:1;transform:scale(1.01);filter:blur(1px) brightness(1.12) saturate(1.08)}
+  100%{opacity:1;transform:scale(1);filter:blur(0) brightness(1) saturate(1)}
+}
 @keyframes skeletonBuild{
   0%{opacity:0;transform:translateY(14px) scale(.82);filter:brightness(1.7) blur(6px)}
   55%{opacity:1;transform:translateY(0) scale(1.03);filter:brightness(1.2) blur(1px)}
@@ -250,7 +295,11 @@ body.stage-mode .side-nav{pointer-events:none}
   .layer-grid>*{direction:ltr}
   .layer-canvas-wrap{max-width:400px;margin:0 auto}
   .side-nav{right:.5rem}
-  .layer{padding:3rem 1.2rem}
+  .layer{padding:2.7rem 1.1rem}
+  .layer-heading{font-size:clamp(2.2rem,7.6vw,3.2rem)}
+  .layer-sub{font-size:clamp(1.06rem,3.5vw,1.28rem)}
+  .layer-body{font-size:1.02rem;line-height:1.92}
+  .layer-note{font-size:.96rem}
   .final-meta{font-size:.62rem;letter-spacing:.18em}
   .final-hit{font-size:clamp(.96rem,4.2vw,1.2rem)}
   .final-hit2{font-size:clamp(.9rem,3.6vw,1.02rem)}
@@ -265,10 +314,10 @@ body.stage-mode .side-nav{pointer-events:none}
   .hero .formula-box{padding:1rem .9rem;margin-top:1.35rem}
   .layer{padding:2.2rem 1rem}
   .layer-grid{gap:1.2rem}
-  .layer-heading{font-size:clamp(1.75rem,7vw,2.2rem)}
-  .layer-sub{font-size:1.03rem;opacity:.9}
-  .layer-body{font-size:1rem;line-height:1.85;color:rgba(255,255,255,.74)}
-  .layer-note{font-size:.96rem;line-height:1.75;color:rgba(255,255,255,.84)}
+  .layer-heading{font-size:clamp(2.05rem,8.4vw,2.6rem)}
+  .layer-sub{font-size:clamp(1.08rem,4.1vw,1.25rem);opacity:.92}
+  .layer-body{font-size:1.08rem;line-height:1.9;color:rgba(255,255,255,.82)}
+  .layer-note{font-size:1.02rem;line-height:1.8;color:rgba(255,255,255,.9)}
   .layer-formula{padding:.9rem .85rem}
   .layer-formula .katex{font-size:.98rem!important}
   .layer-canvas-wrap{max-width:100%;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
@@ -713,10 +762,10 @@ function markSequence(section){
     const isSkeleton=el.matches('#heroViz,.hero-overlay,.layer-canvas-wrap,#destinyCanvas,.formula-field,.percentile-panel');
     const isNode=el.matches('.layer-formula,.big-formula,.score-card,.nav-dot');
     let delay=idx*120;
-    if(isSkeleton)delay=120+kIdx++*130;
-    if(isNode)delay=560+nIdx++*110;
-    if(!isSkeleton&&!isNode)delay=980+tIdx++*120;
-    if(isNote)delay=(targets.length+9)*120;
+    if(isSkeleton)delay=160+kIdx++*170;
+    if(isNode)delay=920+nIdx++*150;
+    if(!isSkeleton&&!isNode)delay=1680+tIdx++*140;
+    if(isNote)delay=(targets.length+16)*140;
     el.classList.add('seq-item');
     el.style.setProperty('--sd',`${delay}ms`);
     if(isViz){
